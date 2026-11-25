@@ -1,13 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, ShieldCheck } from "@phosphor-icons/react";
+import { ArrowRight, Gift, ShieldCheck } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/components/auth-provider";
+import { TreasureChestShowcase } from "@/components/TreasureChestShowcase";
+import styles from "@/components/TreasureChestModal.module.css";
 
 export default function HomePage() {
   const { user, loading, login } = useAuth();
   const [authError, setAuthError] = useState(false);
+  const [chestModalOpen, setChestModalOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   // Video thao tác chạy chậm lại (0.75x) để dễ theo dõi từng thao tác.
   useEffect(() => {
@@ -25,6 +28,13 @@ export default function HomePage() {
           <strong>BCN Arena</strong>
         </Link>
         <div className="landing-actions">
+          <button
+            type="button"
+            className={styles.landingOpenChestBtn}
+            onClick={() => setChestModalOpen(true)}
+          >
+            <Gift weight="fill" /> Mở Rương Kho Báu
+          </button>
           <Link className="text-link" href="/verify">
             Xác minh chứng nhận
           </Link>
@@ -86,6 +96,19 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      {chestModalOpen ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Rương kho báu BCN Arena"
+          className={styles.modalBackdrop}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setChestModalOpen(false);
+          }}
+        >
+          <TreasureChestShowcase onCloseModal={() => setChestModalOpen(false)} />
+        </div>
+      ) : null}
     </main>
   );
 }

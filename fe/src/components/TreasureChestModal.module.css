@@ -1,0 +1,1125 @@
+/* ==========================================================================
+   BCN Arena — Modern Open Chest (Premium Frosted-Glass Vault CSS Module)
+   Zero Tailwind classes. GPU-composited transforms & opacity only.
+   ========================================================================== */
+
+/* ---------- Modal Backdrop & Glassmorphism Vault Container ---------- */
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(4, 8, 14, 0.84);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  animation: modalFadeIn 220ms ease-out both;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalContainer {
+  --vault-accent: #10b981;
+  --vault-glow: rgba(16, 185, 129, 0.16);
+  --rarity-primary: rgba(16, 185, 129, 0.72);
+  --rarity-secondary: rgba(52, 211, 153, 0.9);
+  --rarity-glow: rgba(16, 185, 129, 0.42);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 820px;
+  max-height: 92dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-radius: 28px;
+  padding: 28px 32px 24px;
+  background:
+    radial-gradient(circle at 50% 24%, var(--vault-glow) 0%, transparent 56%),
+    linear-gradient(165deg, rgba(16, 24, 34, 0.96) 0%, rgba(9, 14, 21, 0.98) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 32px 96px rgba(0, 0, 0, 0.82),
+    0 0 48px var(--vault-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+}
+
+/* Subtle SVG film-grain texture overlay */
+.noiseOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  z-index: 1;
+}
+
+/* Rarity & Charge Theme Modifiers */
+.rarityRare {
+  --vault-accent: #10b981;
+  --vault-glow: rgba(16, 185, 129, 0.16);
+}
+
+.rarityEpic {
+  --vault-accent: #f59e0b;
+  --vault-glow: rgba(245, 158, 11, 0.18);
+}
+
+.rarityMythic {
+  --vault-accent: #ec4899;
+  --vault-glow: rgba(236, 72, 153, 0.18);
+}
+
+.chargeTier1 {
+  --rarity-primary: rgba(56, 189, 248, 0.8);
+  --rarity-secondary: rgba(125, 211, 252, 0.95);
+  --rarity-glow: rgba(56, 189, 248, 0.48);
+}
+
+.chargeTier2 {
+  --rarity-primary: rgba(168, 85, 247, 0.85);
+  --rarity-secondary: rgba(216, 180, 254, 0.95);
+  --rarity-glow: rgba(168, 85, 247, 0.55);
+}
+
+.chargeTier3 {
+  --rarity-primary: rgba(250, 204, 21, 0.92);
+  --rarity-secondary: rgba(254, 240, 138, 1);
+  --rarity-glow: rgba(250, 204, 21, 0.68);
+}
+
+.lostTheme {
+  --vault-accent: #ef4444;
+  --vault-glow: rgba(239, 68, 68, 0.14);
+}
+
+/* ---------- Top Icon Controls ---------- */
+
+.soundToggleBtn,
+.modalCloseBtn {
+  position: absolute;
+  top: 18px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 34, 0.85);
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, color 160ms ease,
+    background-color 160ms ease;
+}
+
+.soundToggleBtn {
+  left: 18px;
+}
+
+.modalCloseBtn {
+  right: 18px;
+}
+
+.soundToggleBtn:hover,
+.modalCloseBtn:hover {
+  background: rgba(24, 36, 50, 0.98);
+  border-color: rgba(250, 204, 21, 0.5);
+  color: #fef3c7;
+  transform: scale(1.06);
+}
+
+.soundToggleBtn:focus-visible,
+.modalCloseBtn:focus-visible {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+}
+
+/* ---------- Header & Wallet Counter ---------- */
+
+.headerGroup {
+  position: relative;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: center;
+}
+
+.arenaBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 9999px;
+  padding: 5px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+}
+
+.walletWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes walletFloatUpFade {
+  0% {
+    opacity: 0;
+    transform: translate3d(-50%, 6px, 0) scale(0.85);
+  }
+  18% {
+    opacity: 1;
+    transform: translate3d(-50%, -8px, 0) scale(1.06);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-50%, -44px, 0) scale(0.95);
+  }
+}
+
+.walletFloatingBadge {
+  position: absolute;
+  left: 50%;
+  top: -12px;
+  z-index: 35;
+  pointer-events: none;
+  white-space: nowrap;
+  border-radius: 9999px;
+  padding: 4px 12px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 12px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fde047 0%, #f59e0b 100%);
+  color: #1c1002;
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.55);
+  animation: walletFloatUpFade 1250ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.walletBadge {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: 16px;
+  padding: 10px 18px;
+  background: rgba(12, 18, 26, 0.88);
+  border: 1px solid rgba(245, 158, 11, 0.34);
+  will-change: transform;
+}
+
+.walletMedallion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: radial-gradient(circle at 30% 30%, #fef08a 0%, #f59e0b 62%, #b45309 100%);
+  box-shadow:
+    0 4px 14px rgba(245, 158, 11, 0.42),
+    inset 0 1px 2px rgba(255, 255, 255, 0.75);
+  color: #291502;
+}
+
+.walletInfo {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.walletLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.walletValueRow {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.walletAmount {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+  color: #fef3c7;
+}
+
+.walletCurrency {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f59e0b;
+}
+
+/* ---------- 3D Chest Stage ---------- */
+
+.stageWrapper {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 48px 0 16px;
+}
+
+.duoArena {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+@keyframes energyBeamShoot {
+  0% {
+    opacity: 0;
+    transform: translate3d(-90px, -10px, 0) scaleX(0.2);
+  }
+  30% {
+    opacity: 1;
+    transform: translate3d(-10px, -4px, 0) scaleX(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(86px, 4px, 0) scaleX(0.35);
+  }
+}
+
+.energyStrikeBeam {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 140px;
+  height: 10px;
+  margin-top: -5px;
+  margin-left: -70px;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 25;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #38bdf8 30%,
+    #fef08a 75%,
+    #ffffff 100%
+  );
+  box-shadow:
+    0 0 18px rgba(56, 189, 248, 0.85),
+    0 0 28px rgba(250, 204, 21, 0.7);
+  animation: energyBeamShoot 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.characterStage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 230px;
+  height: 264px;
+}
+
+.characterCanvasHost {
+  width: 100%;
+  height: 240px;
+  cursor: grab;
+  touch-action: none;
+}
+
+.characterCanvasHost:active {
+  cursor: grabbing;
+}
+
+.characterLoader {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.characterCaption {
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+}
+
+.chestRoot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  perspective: 1000px;
+  perspective-origin: 50% 42%;
+}
+
+.chestButton {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 280px;
+  height: 244px;
+  border: 0;
+  border-radius: 24px;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+.chestButton:disabled {
+  cursor: default;
+}
+
+.chestButton:focus-visible {
+  outline: 2px solid rgba(245, 158, 11, 0.85);
+  outline-offset: 4px;
+}
+
+.groundShadow {
+  position: absolute;
+  bottom: 16px;
+  width: 244px;
+  height: 40px;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.22) 52%,
+    transparent 74%
+  );
+  filter: blur(6px);
+  transform: translate3d(0, 0, -20px);
+}
+
+.magicCircle {
+  position: absolute;
+  left: 50%;
+  bottom: -76px;
+  width: 244px;
+  height: 244px;
+  border-radius: 9999px;
+  pointer-events: none;
+  border: 1px dashed var(--rarity-primary);
+  box-shadow:
+    0 0 28px var(--rarity-glow),
+    inset 0 0 22px var(--rarity-glow);
+  transform: translate3d(-50%, 0, -40px) rotateX(76deg);
+  z-index: 0;
+}
+
+.magicCircleInner {
+  position: absolute;
+  inset: 22px;
+  border-radius: 9999px;
+  border: 1.5px dotted var(--rarity-secondary);
+}
+
+.chestBackAura {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 280px;
+  height: 240px;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at center,
+    var(--rarity-glow) 0%,
+    transparent 62%
+  );
+  filter: blur(18px);
+  transform: translate3d(-50%, -52%, -45px);
+}
+
+.chestStage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+@keyframes chestFloatKeyframes {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes chestShakeKeyframes {
+  0% {
+    transform: translate3d(0, 0, 0) rotateZ(0deg) scale(1);
+  }
+  18% {
+    transform: translate3d(-7px, 2px, 0) rotateZ(-4.5deg) scale(1.02, 0.96);
+  }
+  36% {
+    transform: translate3d(7px, -2px, 0) rotateZ(4.5deg) scale(0.98, 1.03);
+  }
+  54% {
+    transform: translate3d(-8px, 1px, 0) rotateZ(-5deg) scale(1.03, 0.96);
+  }
+  72% {
+    transform: translate3d(6px, -2px, 0) rotateZ(3.5deg) scale(0.99, 1.03);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotateZ(0deg) scale(1);
+  }
+}
+
+.chestShaking {
+  animation: chestShakeKeyframes 350ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes chestSummonKeyframes {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -34px, 0) scale(0.76);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.chestSummon {
+  animation: chestSummonKeyframes 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.chestContainer {
+  position: relative;
+  width: 220px;
+  height: 180px;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.chestIsometric {
+  position: relative;
+  width: 220px;
+  height: 166px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.chestBase {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 220px;
+  height: 112px;
+  transform-style: preserve-3d;
+}
+
+.chestLid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 54px;
+  transform-origin: 50% 100% -74px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  z-index: 5;
+}
+
+/* ---------- God-Rays, Seam Light, Shockwave & Impact ---------- */
+
+.godRaysWrapper {
+  position: absolute;
+  left: 50%;
+  top: 42px;
+  width: 300px;
+  height: 300px;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  z-index: 2;
+}
+
+.godRaysSpin,
+.godRaysSecondary,
+.godRaysCore {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 9999px;
+  mix-blend-mode: screen;
+}
+
+.godRaysSpin {
+  width: 290px;
+  height: 290px;
+  background: repeating-conic-gradient(
+    from 0deg,
+    var(--rarity-primary) 0deg 10deg,
+    transparent 10deg 24deg,
+    var(--rarity-secondary) 24deg 32deg,
+    transparent 32deg 46deg
+  );
+  mask-image: radial-gradient(circle, #000 10%, rgba(0, 0, 0, 0.5) 40%, transparent 64%);
+  -webkit-mask-image: radial-gradient(circle, #000 10%, rgba(0, 0, 0, 0.5) 40%, transparent 64%);
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.godRaysSecondary {
+  width: 260px;
+  height: 260px;
+  background: repeating-conic-gradient(
+    from 14deg,
+    rgba(255, 251, 235, 0.4) 0deg 8deg,
+    transparent 8deg 28deg
+  );
+  mask-image: radial-gradient(circle, #000 12%, transparent 60%);
+  -webkit-mask-image: radial-gradient(circle, #000 12%, transparent 60%);
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.godRaysCore {
+  width: 170px;
+  height: 170px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 251, 235, 0.92) 0%,
+    var(--rarity-primary) 34%,
+    transparent 64%
+  );
+  filter: blur(8px);
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.seamCrack,
+.seamGlow {
+  position: absolute;
+  left: 50%;
+  top: 52px;
+  width: 214px;
+  height: 10px;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--rarity-primary) 20%,
+    rgba(255, 255, 255, 0.95) 50%,
+    var(--rarity-primary) 80%,
+    transparent 100%
+  );
+  box-shadow: 0 0 18px var(--rarity-glow);
+  transform: translate3d(-50%, -50%, 78px);
+  z-index: 12;
+}
+
+@keyframes shockwaveExpand {
+  0% {
+    opacity: 0.9;
+    transform: translate3d(-50%, -50%, 30px) scale(0.25);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-50%, -50%, 30px) scale(2.8);
+  }
+}
+
+.shockwaveRing {
+  position: absolute;
+  left: 50%;
+  top: 54px;
+  width: 150px;
+  height: 150px;
+  border-radius: 9999px;
+  border: 2.5px solid var(--rarity-secondary);
+  box-shadow: 0 0 24px var(--rarity-glow);
+  pointer-events: none;
+  animation: shockwaveExpand 540ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 14;
+}
+
+@keyframes impactFlashFade {
+  0% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.impactScreenFlash {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 48%, rgba(254, 240, 138, 0.65) 0%, transparent 70%);
+  mix-blend-mode: screen;
+  animation: impactFlashFade 180ms ease-out forwards;
+}
+
+@keyframes interiorCoinFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 12px) rotateY(0deg);
+  }
+  50% {
+    transform: translate3d(0, -10px, 12px) rotateY(180deg);
+  }
+}
+
+.interiorCoin {
+  position: absolute;
+  top: 40px;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 32% 30%, #fef9c3 0%, #facc15 48%, #b45309 100%);
+  border: 1.5px solid #fef08a;
+  box-shadow: 0 0 14px rgba(250, 204, 21, 0.78);
+  pointer-events: none;
+  z-index: 4;
+}
+
+.interiorCoin1 {
+  left: 66px;
+}
+
+.interiorCoin2 {
+  left: 98px;
+  top: 30px;
+}
+
+.interiorCoin3 {
+  left: 130px;
+}
+
+/* ---------- Obsidian Walnut & Brushed Gold Textures ---------- */
+
+.woodSurface {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.16) 0px,
+      rgba(0, 0, 0, 0.16) 2px,
+      transparent 2px,
+      transparent 36px
+    ),
+    linear-gradient(180deg, #5e3419 0%, #3f200d 55%, #2a1306 100%);
+}
+
+.woodSide {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.18) 0px,
+      rgba(0, 0, 0, 0.18) 2px,
+      transparent 2px,
+      transparent 26px
+    ),
+    linear-gradient(180deg, #4b2812 0%, #321809 60%, #200e04 100%);
+}
+
+.woodInterior {
+  background: linear-gradient(180deg, #1b0e05 0%, #0d0602 100%);
+}
+
+.goldStrap {
+  background: linear-gradient(
+    135deg,
+    #fef3c7 0%,
+    #f5c542 28%,
+    #b7791f 62%,
+    #fde047 86%,
+    #92400e 100%
+  );
+}
+
+.goldStrapVertical {
+  background: linear-gradient(
+    90deg,
+    #92400e 0%,
+    #f5c542 35%,
+    #fef3c7 50%,
+    #d97706 72%,
+    #78350f 100%
+  );
+}
+
+.goldLockPlate {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 48px;
+  border-radius: 10px 10px 16px 16px;
+  background: linear-gradient(135deg, #fef3c7 0%, #f5c542 36%, #b45309 100%);
+  border: 2px solid #78350f;
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.55),
+    0 0 14px var(--rarity-glow),
+    inset 0 2px 3px rgba(255, 255, 255, 0.75);
+}
+
+.goldLockShackle {
+  position: absolute;
+  top: -10px;
+  width: 22px;
+  height: 12px;
+  border: 3.5px solid #f5c542;
+  border-bottom: 0;
+  border-radius: 12px 12px 0 0;
+}
+
+/* ---------- Prompts, Decision Dock & Banners ---------- */
+
+.tapPrompt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 9999px;
+  padding: 7px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #e2e8f0;
+}
+
+.oddsHint {
+  margin: 8px 0 0;
+  max-width: 460px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #94a3b8;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.decisionPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 440px;
+  border-radius: 18px;
+  padding: 14px 18px;
+  background: rgba(15, 23, 34, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.decisionTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  color: #fef3c7;
+  text-align: center;
+}
+
+.decisionButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.decisionContinue,
+.decisionCash {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 12px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 160ms ease, filter 160ms ease;
+}
+
+.decisionContinue {
+  background: rgba(168, 85, 247, 0.18);
+  border: 1px solid rgba(192, 132, 252, 0.65);
+  color: #e9d5ff;
+}
+
+.decisionCash {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  border: 1px solid rgba(253, 224, 71, 0.8);
+  color: #1c1002;
+}
+
+.decisionContinue:hover,
+.decisionCash:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+.rewardBanner,
+.loseBanner {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 9999px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.rewardBanner {
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%);
+  border: 1px solid rgba(250, 204, 21, 0.55);
+  color: #fef3c7;
+}
+
+.loseBanner {
+  background: rgba(127, 29, 29, 0.4);
+  border: 1px solid rgba(248, 113, 113, 0.55);
+  color: #fecaca;
+}
+
+/* ---------- Control Bar & Magnetic Coins ---------- */
+
+.controlBar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  border-radius: 16px;
+  padding: 12px 16px;
+  background: rgba(12, 18, 26, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.tierGroup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.tierLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.tierButtons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tierBtn {
+  border-radius: 8px;
+  padding: 6px 11px;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.tierBtn:hover:not(:disabled) {
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #fef3c7;
+}
+
+.tierBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.tierBtnActive {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: #1c1002;
+  border-color: rgba(253, 224, 71, 0.82);
+}
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.resetChestBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(16, 185, 129, 0.14);
+  border: 1px solid rgba(16, 185, 129, 0.46);
+  color: #34d399;
+  cursor: pointer;
+  transition: transform 160ms ease, background-color 160ms ease;
+}
+
+.resetChestBtn:hover {
+  background: rgba(16, 185, 129, 0.24);
+  transform: translateY(-1px);
+}
+
+.magneticCoinLayer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 200;
+}
+
+.magneticCoin {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 13px;
+  font-weight: 900;
+  color: #291502;
+  background: radial-gradient(circle at 30% 30%, #fef9c3 0%, #facc15 55%, #b45309 100%);
+  border: 1.5px solid #fef08a;
+  box-shadow: 0 0 16px rgba(250, 204, 21, 0.75);
+  will-change: transform, opacity;
+}
+
+.landingOpenChestBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 12px;
+  padding: 9px 15px;
+  font-size: 14px;
+  font-weight: 700;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.18) 0%, rgba(13, 21, 28, 0.94) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.48);
+  color: #fbbf24;
+  cursor: pointer;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.landingOpenChestBtn:hover {
+  border-color: rgba(251, 191, 36, 0.8);
+  transform: translateY(-1px);
+}
+
+/* ---------- Continuous Animations (Respect Reduced Motion) ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes godRaysRotate {
+    from {
+      transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    }
+    to {
+      transform: translate3d(-50%, -50%, 0) rotate(360deg);
+    }
+  }
+
+  @keyframes godRaysRotateRev {
+    from {
+      transform: translate3d(-50%, -50%, 0) rotate(360deg);
+    }
+    to {
+      transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    }
+  }
+
+  @keyframes magicRingSpin {
+    from {
+      transform: translate3d(-50%, 0, -40px) rotateX(76deg) rotate(0deg);
+    }
+    to {
+      transform: translate3d(-50%, 0, -40px) rotateX(76deg) rotate(360deg);
+    }
+  }
+
+  .chestFloat {
+    animation: chestFloatKeyframes 3.2s ease-in-out infinite;
+  }
+
+  .magicCircle {
+    animation: magicRingSpin 14s linear infinite;
+  }
+
+  .godRaysSpin {
+    animation: godRaysRotate 7.5s linear infinite;
+  }
+
+  .godRaysSecondary {
+    animation: godRaysRotateRev 11s linear infinite;
+  }
+
+  .interiorCoin {
+    animation: interiorCoinFloat 2.4s ease-in-out infinite;
+  }
+}
+
+@media (max-width: 640px) {
+  .modalContainer {
+    padding: 22px 16px 18px;
+    border-radius: 22px;
+  }
+
+  .controlBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
